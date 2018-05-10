@@ -1,5 +1,9 @@
 #include <stdio.h>
 
-int main(){
-	return 0;
+#include "src/global.h"
+
+int main(int argc, char *argv[]){
+    Global g(argc, argv);
+
+    return g.exec();
 }
