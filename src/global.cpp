@@ -27,7 +27,4 @@ int Global::exec()
         return 0;
     }
 
-    while (1){
-
-    }
 }
