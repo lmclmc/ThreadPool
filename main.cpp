@@ -2,7 +2,7 @@
 
 #include "src/thread/threadpool.h"
 
-int main(int argc, char *argv[]){
+int main(){
     ThreadPool* t = ThreadPool::getInstance();
     std::future<long> fu1 = t->addTask([](long a, int b, int c){
         long tmp = 0;
@@ -67,6 +67,11 @@ int main(int argc, char *argv[]){
 
     }, 21054, 7254, 1000);
     printf("fu5\n");
+    std::cin.get();
+    t->addThread();
+     t->addThread();
+      t->addThread();
+       t->addThread();
     std::cout<<"fu1 "<<fu1.get()<<std::endl;
     std::cout<<"fu2 "<<fu2.get()<<std::endl;
     std::cout<<"fu3 "<<fu3.get()<<std::endl;

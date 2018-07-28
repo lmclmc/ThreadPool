@@ -8,8 +8,6 @@
 #include <condition_variable>
 #include <list>
 #include <future>
-#include <tuple>
-#include <atomic>
 
 class ThreadPool{
 public:
@@ -18,6 +16,9 @@ public:
     template <typename F, typename... Args>
     auto addTask(F&& f, Args&&... args) -> std::future<typename std::result_of<F(Args...)>::type>;
 
+    void addThread();
+
+    ThreadPool(const ThreadPool& t) = delete;
     ~ThreadPool();
 
 private:
@@ -38,12 +39,11 @@ auto ThreadPool::addTask(F&& f, Args&&... args)
     using returnType = typename std::result_of<F(Args...)>::type;
     auto task = std::make_shared<std::packaged_task<returnType()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
     std::future<returnType> returnRes = task.get()->get_future();
-
     list_mutex.lock();
     tasks.push_back([task]{(*task)();});
     list_mutex.unlock();
     condition.notify_one();
-    printf("%d\n", tasks.size());
+
     return returnRes;
 }
 
