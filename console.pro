@@ -4,11 +4,10 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    src/global.cpp \
-    src/strings/String.cpp \
-    src/check/md5check.cpp
+    src/thread/threadpool.cpp
 
 HEADERS += \
-    src/global.h \
-    src/strings/String.h \
-    src/check/md5check.h
+    src/thread/threadpool.h
+
+QMAKE_CXXFLAGS += -std=c++0x
+LIBS += -pthread
