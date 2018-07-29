@@ -25,6 +25,8 @@ private:
     static std::shared_ptr<ThreadPool> pThreadPool;
     ThreadPool(int num);
 
+private:
+    std::atomic<bool> bStop;
     std::vector<std::thread> vWork;
 
     std::mutex list_mutex;

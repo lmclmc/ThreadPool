@@ -14,7 +14,7 @@ int main(){
         }
         printf("fu1\n");
         return tmp;
-    }, 10600, 4614, 2122);
+    }, 1060, 4614, 2122);
     printf("fu1\n");
     std::future<long> fu2 = t->addTask([](long a, int b, int c){
         long tmp = 0;
@@ -40,7 +40,7 @@ int main(){
         printf("fu3\n");
         return tmp;
 
-    }, 56006, 7008, 909);
+    }, 5606, 7008, 909);
     printf("fu3\n");
     std::future<long> fu4 = t->addTask([](long a, int b, int c){
         long tmp = 0;
@@ -52,7 +52,7 @@ int main(){
         }
         printf("fu4\n");
         return tmp;
-    }, 20600, 6666, 4444);
+    }, 2060, 3666, 4444);
     printf("fu4\n");
     std::future<long> fu5 = t->addTask([](long a, int b, int c){
         long tmp = 0;
@@ -65,9 +65,9 @@ int main(){
         printf("fu5\n");
         return tmp;
 
-    }, 21054, 7254, 1000);
+    }, 2154, 7254, 1000);
     printf("fu5\n");
-    std::cin.get();
+  //  std::cin.get();
     t->addThread();
      t->addThread();
       t->addThread();
