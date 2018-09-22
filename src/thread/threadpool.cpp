@@ -3,7 +3,7 @@
 ThreadPool *ThreadPool::getInstance()
 {
     if (pThreadPool == nullptr)
-        pThreadPool = (std::shared_ptr<ThreadPool>)new ThreadPool(3);
+        pThreadPool = (std::shared_ptr<ThreadPool>)new ThreadPool(8);
     return pThreadPool.get();
 }
 
@@ -18,7 +18,7 @@ ThreadPool::ThreadPool(int num):
 
 void ThreadPool::addThread()
 {
-    vWork.push_back(std::thread([this]{
+    vWork.emplace_back([this]{
         std::mutex localMutex;
         std::unique_lock<std::mutex> localLock(localMutex);
         for (;;){
@@ -39,8 +39,7 @@ void ThreadPool::addThread()
             this->list_mutex.unlock();
             tmpTask();
         }
-        std::cout<<"des"<<std::endl;
-    }));
+    });
 }
 
 ThreadPool::~ThreadPool()
@@ -52,11 +51,13 @@ ThreadPool::~ThreadPool()
     list_mutex.unlock();
 
     for (auto& tmpWork : vWork){
-        for (auto& tmp : vWork){
+        for (unsigned int i=0; i<vWork.size(); i++){
             condition.notify_one();
         }
         tmpWork.join();
     }
+
+    vWork.clear();
 
     std::cout<<"ThreadPool destory successful"<<std::endl;
 }
