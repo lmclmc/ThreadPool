@@ -111,6 +111,62 @@ int main(){
 
     }, 11054, 1754, 100);
     printf("fu8\n");
+
+    std::future<long> fu9 = t->addTask([](long a, int b, int c){
+        volatile long tmp = 0;
+        while(1){
+            tmp++;
+            if (tmp>a*b*c){
+                break;
+            }
+        }
+        printf("fu9\n");
+        return tmp;
+
+    }, 1054, 1754, 1020);
+    printf("fu9\n");
+
+    std::future<long> fu10 = t->addTask([](long a, int b, int c){
+        volatile long tmp = 0;
+        while(1){
+            tmp++;
+            if (tmp>a*b*c){
+                break;
+            }
+        }
+        printf("fu10\n");
+        return tmp;
+
+    }, 11054, 754, 1400);
+    printf("fu10\n");
+
+    std::future<long> fu11 = t->addTask([](long a, int b, int c){
+        volatile long tmp = 0;
+        while(1){
+            tmp++;
+            if (tmp>a*b*c){
+                break;
+            }
+        }
+        printf("fu11\n");
+        return tmp;
+
+    }, 11054, 17524, 10);
+    printf("fu11\n");
+
+    std::future<long> fu12 = t->addTask([](long a, int b, int c){
+        volatile long tmp = 0;
+        while(1){
+            tmp++;
+            if (tmp>a*b*c){
+                break;
+            }
+        }
+        printf("fu12\n");
+        return tmp;
+
+    }, 110454, 174, 100);
+    printf("fu12\n");
   //  std::cin.get();
  //    t->addThread();
 //      t->addThread();
@@ -123,6 +179,10 @@ int main(){
     std::cout<<"fu6 "<<fu6.get()<<std::endl;
     std::cout<<"fu7 "<<fu7.get()<<std::endl;
     std::cout<<"fu8 "<<fu8.get()<<std::endl;
+    std::cout<<"fu9 "<<fu5.get()<<std::endl;
+    std::cout<<"fu10 "<<fu6.get()<<std::endl;
+    std::cout<<"fu11 "<<fu7.get()<<std::endl;
+    std::cout<<"fu12 "<<fu8.get()<<std::endl;
    // printf("%ld\n", global);
     return 0;
 }

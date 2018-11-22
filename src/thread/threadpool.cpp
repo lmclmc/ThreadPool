@@ -3,7 +3,7 @@
 ThreadPool *ThreadPool::getInstance()
 {
     if (pThreadPool == nullptr)
-        pThreadPool = (std::shared_ptr<ThreadPool>)new ThreadPool(8);
+        pThreadPool = (std::shared_ptr<ThreadPool>)new ThreadPool(12);
     return pThreadPool.get();
 }
 
