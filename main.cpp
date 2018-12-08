@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "src/thread/threadpool.h"
+#include "threadpool.h"
 
 long ddd(int a, int b, int c){
     long tmp = 0;
