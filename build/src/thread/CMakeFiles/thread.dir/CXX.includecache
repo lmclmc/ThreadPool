@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lmc/assembly/src/thread/threadpool.cpp
+threadpool.h
+/home/lmc/assembly/src/thread/threadpool.h
+
+/home/lmc/assembly/src/thread/threadpool.h
+iostream
+-
+boost/shared_ptr.hpp
+-
+thread
+-
+mutex
+-
+condition_variable
+-
+list
+-
+future
+-
+
