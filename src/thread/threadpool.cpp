@@ -2,21 +2,22 @@
 
 ThreadPool *ThreadPool::getInstance()
 {
-    if (pThreadPool == nullptr)
-        pThreadPool = (std::shared_ptr<ThreadPool>)new ThreadPool(12);
-    return pThreadPool.get();
-}
-
-ThreadPool::ThreadPool(int num):
-    bStop(false)
-{
-    for (int i=0; i<num; i++){
-        addThread();
+    if (pThreadPool == nullptr){
+        pThreadPool = new ThreadPool();
+	pThreadPool->bStop = false;
     }
-    std::cout<<"ThreadPool init successful"<<std::endl;
+
+    return pThreadPool;
 }
 
-void ThreadPool::addThread()
+void ThreadPool::destoryPool() throw()
+{
+    if (pThreadPool != nullptr)
+	delete pThreadPool;
+    pThreadPool = nullptr;
+}
+
+void ThreadPool::addThread() throw()
 {
     vWork.emplace_back([this]{
         std::mutex localMutex;
@@ -50,7 +51,7 @@ ThreadPool::~ThreadPool()
     tasks.clear();
     list_mutex.unlock();
 
-    for (auto& tmpWork : vWork){
+    for (auto &tmpWork : vWork){
         for (unsigned int i=0; i<vWork.size(); i++){
             condition.notify_one();
         }
@@ -62,6 +63,6 @@ ThreadPool::~ThreadPool()
     std::cout<<"ThreadPool destory successful"<<std::endl;
 }
 
-std::shared_ptr<ThreadPool> ThreadPool::pThreadPool = nullptr;
+ThreadPool *ThreadPool::pThreadPool = nullptr;
 
 

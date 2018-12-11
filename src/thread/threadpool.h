@@ -11,7 +11,7 @@
 
 class ThreadPool{
 public:
-    static ThreadPool* getInstance();
+    static ThreadPool *getInstance();
 
     template <typename F, typename... Args>
     auto addTask(F&& f, Args&&... args) throw() -> std::future<typename std::result_of<F(Args...)>::type>;
@@ -19,11 +19,12 @@ public:
     void addThread() throw();
 
     ThreadPool(const ThreadPool& t) = delete;
-    ~ThreadPool();
+    void destoryPool() throw(); 
 
 private:
-    static std::shared_ptr<ThreadPool> pThreadPool;
-    ThreadPool(int num);
+    static ThreadPool *pThreadPool;
+    ThreadPool() = default;
+    ~ThreadPool();
 
 private:
     std::atomic<bool> bStop;

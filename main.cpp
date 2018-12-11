@@ -137,7 +137,7 @@ int main(){
         printf("fu10\n");
         return tmp;
 
-    }, 11054, 754, 14000);
+    }, 11054, 754, 1400);
     printf("fu10\n");
 
     std::future<long> fu11 = t->addTask([](long a, int b, int c){
@@ -167,10 +167,16 @@ int main(){
 
     }, 110454, 174, 1000);
     printf("fu12\n");
+
+for (int i=0; i<12; i++){
+	t->addThread();
+}
   //  std::cin.get();
  //    t->addThread();
 //      t->addThread();
 //       t->addThread();
+	t->destoryPool();
+#if 0
     std::cout<<"fu1 "<<fu1.get()<<std::endl;
     std::cout<<"fu2 "<<fu2.get()<<std::endl;
     std::cout<<"fu3 "<<fu3.get()<<std::endl;
@@ -179,10 +185,13 @@ int main(){
     std::cout<<"fu6 "<<fu6.get()<<std::endl;
     std::cout<<"fu7 "<<fu7.get()<<std::endl;
     std::cout<<"fu8 "<<fu8.get()<<std::endl;
-    std::cout<<"fu9 "<<fu5.get()<<std::endl;
-    std::cout<<"fu10 "<<fu6.get()<<std::endl;
-    std::cout<<"fu11 "<<fu7.get()<<std::endl;
-    std::cout<<"fu12 "<<fu8.get()<<std::endl;
+    std::cout<<"fu9 "<<fu9.get()<<std::endl;
+    std::cout<<"fu10 "<<fu10.get()<<std::endl;
+    std::cout<<"fu11 "<<fu11.get()<<std::endl;
+    std::cout<<"fu12 "<<fu12.get()<<std::endl;
+#endif
    // printf("%ld\n", global);
+
+	pause();
     return 0;
 }
