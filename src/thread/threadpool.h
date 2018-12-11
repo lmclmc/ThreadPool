@@ -14,9 +14,9 @@ public:
     static ThreadPool* getInstance();
 
     template <typename F, typename... Args>
-    auto addTask(F&& f, Args&&... args) -> std::future<typename std::result_of<F(Args...)>::type>;
+    auto addTask(F&& f, Args&&... args) throw() -> std::future<typename std::result_of<F(Args...)>::type>;
 
-    void addThread();
+    void addThread() throw();
 
     ThreadPool(const ThreadPool& t) = delete;
     ~ThreadPool();
@@ -36,7 +36,7 @@ private:
 };
 
 template <typename F, typename... Args>
-auto ThreadPool::addTask(F&& f, Args&&... args)
+auto ThreadPool::addTask(F&& f, Args&&... args) throw()
 -> std::future<typename std::result_of<F(Args...)>::type>{
     using returnType = typename std::result_of<F(Args...)>::type;
     auto task = std::make_shared<std::packaged_task<returnType()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
