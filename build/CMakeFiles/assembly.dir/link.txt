@@ -1,1 +1,0 @@
-/usr/bin/c++   -rdynamic -std=c++11 -pthread  -rdynamic CMakeFiles/assembly.dir/main.cpp.o  -o assembly src/thread/libthread.a 

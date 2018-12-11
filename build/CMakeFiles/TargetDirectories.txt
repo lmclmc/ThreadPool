@@ -1,6 +1,0 @@
-/home/lmc/assembly/build/CMakeFiles/edit_cache.dir
-/home/lmc/assembly/build/CMakeFiles/rebuild_cache.dir
-/home/lmc/assembly/build/CMakeFiles/assembly.dir
-/home/lmc/assembly/build/src/thread/CMakeFiles/rebuild_cache.dir
-/home/lmc/assembly/build/src/thread/CMakeFiles/edit_cache.dir
-/home/lmc/assembly/build/src/thread/CMakeFiles/thread.dir
