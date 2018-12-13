@@ -8,7 +8,6 @@
 #include <condition_variable>
 #include <list>
 #include <future>
-#include <sched.h>
 
 #ifdef SPIN_MUTEX 
     #define MUTEX_TYPE SpinMutex
@@ -24,16 +23,8 @@ public:
     SpinMutex() = default;
     SpinMutex(const SpinMutex&) = delete;
     SpinMutex& operator= (const SpinMutex&) = delete;
-    void lock() {
-        bool expected = false;
-        while(!flag.compare_exchange_strong(expected, true)){
- 	    sched_yield();
-            expected = false;
-	}
-    }
-    void unlock() {
-        flag.store(false);
-    }
+    void lock();
+    void unlock();
 };
 
 class ThreadPool{

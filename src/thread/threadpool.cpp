@@ -1,4 +1,6 @@
-#include "threadpool.hpp"
+#include "threadpool.h"
+
+#include <sched.h>
 
 ThreadPool *ThreadPool::getInstance()
 {
@@ -65,4 +67,16 @@ ThreadPool::~ThreadPool()
 
 ThreadPool *ThreadPool::pThreadPool = nullptr;
 
+void SpinMutex::lock()
+{
+    bool expected = false;
+    while(!flag.compare_exchange_strong(expected, true)){
+        sched_yield();
+        expected = false;
+    }	           
+}
 
+void SpinMutex::unlock() 
+{
+    flag.store(false);
+}
