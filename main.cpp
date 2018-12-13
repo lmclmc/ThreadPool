@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <sys/time.h>
 
 #include "threadpool.h"
 
@@ -13,7 +14,40 @@ long ddd(int a, int b, int c){
     printf("fu1\n");
     return tmp;
 }
+#define MAX (100000)
+std::atomic<long> ss;
+int main(){
+	ss = MAX;
+	struct timeval s, e;
+	gettimeofday(&s, NULL);
+	ThreadPool* t = ThreadPool::getInstance();
+	for (int i=0; i<12; i++){
+		t->addThread();
+	}
 
+	for (int i=0; i<MAX; i++){
+		t->addTask([](int a, int b, int c){
+			long tmp = 0;
+			while (1){
+				tmp++;
+				if (tmp>a*b*c){
+					break;
+				}
+			}
+			ss--;
+		}, 120, 120, 12);
+	}
+	while (1){
+		ss--;
+		if (ss<1) break;	
+	}
+	gettimeofday(&e, NULL);
+	printf("time = %ld\n", (e.tv_sec-s.tv_sec)*1000*1000+e.tv_usec-s.tv_usec);
+	pause();
+	return 0;
+}
+
+#if 0
 int main(){
     ThreadPool* t = ThreadPool::getInstance();
     std::future<long> fu1 = t->addTask(ddd, 106, 4614, 2102);
@@ -195,3 +229,4 @@ for (int i=0; i<12; i++){
 	pause();
     return 0;
 }
+#endif

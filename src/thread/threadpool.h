@@ -8,6 +8,35 @@
 #include <condition_variable>
 #include <list>
 #include <future>
+#include <sched.h>
+
+#define SPIN_MUTEX  
+
+#ifdef SPIN_MUTEX 
+    #define MUTEX_TYPE SpinMutex
+#endif
+
+#ifdef MUTEX 
+    #define MUTEX_TYPE std::mutex	
+#endif	
+
+class SpinMutex {
+    std::atomic<bool> flag = ATOMIC_VAR_INIT(false);
+public:
+    SpinMutex() = default;
+    SpinMutex(const SpinMutex&) = delete;
+    SpinMutex& operator= (const SpinMutex&) = delete;
+    void lock() {
+        bool expected = false;
+        while(!flag.compare_exchange_strong(expected, true)){
+ 	    sched_yield();
+            expected = false;
+	}
+    }
+    void unlock() {
+        flag.store(false);
+    }
+};
 
 class ThreadPool{
 public:
@@ -30,7 +59,7 @@ private:
     std::atomic<bool> bStop;
     std::vector<std::thread> vWork;
 
-    std::mutex list_mutex;
+    MUTEX_TYPE list_mutex;
 
     std::condition_variable condition;
     std::list<std::function<void()>> tasks;
