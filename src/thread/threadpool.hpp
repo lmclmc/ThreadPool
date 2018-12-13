@@ -10,8 +10,6 @@
 #include <future>
 #include <sched.h>
 
-#define SPIN_MUTEX  
-
 #ifdef SPIN_MUTEX 
     #define MUTEX_TYPE SpinMutex
 #endif
