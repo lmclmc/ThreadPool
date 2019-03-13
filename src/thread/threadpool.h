@@ -27,7 +27,7 @@ public:
     void unlock();
 };
 
-class ThreadPool{
+class ThreadPool final{
 public:
     static ThreadPool *getInstance();
 
