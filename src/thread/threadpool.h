@@ -27,7 +27,8 @@ public:
     void unlock();
 };
 
-class ThreadPool final{
+class ThreadPool final
+{
 public:
     static ThreadPool *getInstance();
 
@@ -52,11 +53,14 @@ private:
 
     std::condition_variable condition;
     std::list<std::function<void()>> tasks;
+
+    static std::mutex singleton;
 };
 
 template <typename F, typename... Args>
 auto ThreadPool::addTask(F&& f, Args&&... args) throw()
--> std::future<typename std::result_of<F(Args...)>::type>{
+-> std::future<typename std::result_of<F(Args...)>::type>
+{
     using returnType = typename std::result_of<F(Args...)>::type;
     auto task = std::make_shared<std::packaged_task<returnType()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
     std::future<returnType> returnRes = task.get()->get_future();

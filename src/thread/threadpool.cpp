@@ -2,13 +2,22 @@
 
 #include <sched.h>
 
+std::mutex ThreadPool::singleton;
+ThreadPool *ThreadPool::pThreadPool = nullptr;
+
 ThreadPool *ThreadPool::getInstance()
 {
-    if (pThreadPool == nullptr){
-        pThreadPool = new ThreadPool();
-	pThreadPool->bStop = false;
+    if (pThreadPool == nullptr)
+    {
+        singleton.lock();
+        if (pThreadPool == nullptr)
+        {
+            pThreadPool = new ThreadPool();
+            pThreadPool->bStop = false;
+        }
+        singleton.unlock();
     }
-
+    
     return pThreadPool;
 }
 
@@ -53,8 +62,10 @@ ThreadPool::~ThreadPool()
     tasks.clear();
     list_mutex.unlock();
 
-    for (auto &tmpWork : vWork){
-        for (unsigned int i=0; i<vWork.size(); i++){
+    for (auto &tmpWork : vWork)
+    {
+        for (unsigned int i=0; i<vWork.size(); i++)
+        {
             condition.notify_one();
         }
         tmpWork.join();
@@ -65,12 +76,11 @@ ThreadPool::~ThreadPool()
     std::cout<<"ThreadPool destory successful"<<std::endl;
 }
 
-ThreadPool *ThreadPool::pThreadPool = nullptr;
-
 void SpinMutex::lock()
 {
     bool expected = false;
-    while(!flag.compare_exchange_strong(expected, true)){
+    while(!flag.compare_exchange_strong(expected, true))
+    {
         sched_yield();
         expected = false;
     }	           

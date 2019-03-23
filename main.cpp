@@ -16,6 +16,7 @@ long ddd(int a, int b, int c){
 }
 #define MAX (100000)
 std::atomic<long> ss;
+#if 0
 int main(){
 	ss = MAX;
 	struct timeval s, e;
@@ -46,8 +47,8 @@ int main(){
 	pause();
 	return 0;
 }
-
-#if 0
+#endif
+#if 1
 int main(){
     ThreadPool* t = ThreadPool::getInstance();
     std::future<long> fu1 = t->addTask(ddd, 106, 4614, 2102);
