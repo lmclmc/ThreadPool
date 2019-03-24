@@ -1,2 +1,5 @@
 # console
-目前添加了一个单例模式的简易线程池组件。
+修改原创线程池为单例模式
+
+原创在这里
+https://github.com/progschj/ThreadPool
